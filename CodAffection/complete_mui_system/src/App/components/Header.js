@@ -4,9 +4,9 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import SearchIcon from "@material-ui/icons/Search";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff', 
   },
   searchInput: {
     opacity: 0.6,
@@ -19,17 +19,19 @@ const useStyles = makeStyles({
       marginRight: 8
     },
   },
-  btnRoot: {
-    backgroundColor: 'green'
-  },
-  btnLabel: {
-    background: 'red'
-  }
-})
+  // btnRoot: {
+  //   '&:hover':{
+  //     cursor: 'pointer',
+  //     '& .MuiSvgIcon-root': {
+  //       color: theme.palette.error.main
+  //     }
+  //   }
+  // },
+}))
 
 export default function Header() {
   const classes = useStyles();
-
+ 
   return (
     <div>
       <AppBar className={classes.root} position='static'>
@@ -55,7 +57,7 @@ export default function Header() {
                   <ChatBubbleOutlineIcon fontSize='small' />
                 </Badge>
               </IconButton>
-              <IconButton>
+              <IconButton classes={{root: classes.btnRoot, label: classes.btnLabel}}>
                 <PowerSettingsNewIcon fontSize='small' />
               </IconButton>
             </Grid>
