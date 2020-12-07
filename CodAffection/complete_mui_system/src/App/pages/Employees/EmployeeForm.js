@@ -1,5 +1,6 @@
-import { Grid } from '@material-ui/core';
 import { useForm, Form } from '../../components/useForm';
+
+import { Grid } from '@material-ui/core';
 import Controls from '../../components/controls/Controls';
 import * as employeeService from '../../services/employeeService'
 
@@ -22,10 +23,45 @@ const initialFValues = {
 
 export default function EmployeeForm() {
 
-  const { values, handleInputChange } = useForm(initialFValues);
+  function validate(fieldValues = values) {
+    let temp = { ...errors };
+
+    if ('fullName' in fieldValues)
+      temp.fullName = fieldValues.fullName ? '' : 'This field is required.';
+
+    if ('email' in fieldValues)
+      temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? '' : 'Email is not valid';
+
+    if ('mobile' in fieldValues)
+      temp.mobile = fieldValues.mobile.length > 9 ? '' : 'Minimum 10 number is required';
+
+    if ('departmentId' in fieldValues)
+      temp.departmentId = fieldValues.departmentId.length !== 0 ? '' : 'This field is required';
+    setErrors({
+      ...temp
+    });
+
+    if (fieldValues === values)
+      return Object.values(temp).every(x => x === '');
+  }
+
+  const {
+    values,
+    errors,
+    setErrors,
+    handleInputChange,
+    resetForm
+  } = useForm(initialFValues, true, validate);
+
+  function handleSubmit(ev) {
+    ev.preventDefault();
+    if (validate())
+      employeeService.insertEmployee(values);
+      resetForm();
+  }
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Grid container>
         <Grid item xs={6}>
           <Controls.Input
@@ -33,18 +69,21 @@ export default function EmployeeForm() {
             label='Full Name'
             value={values.fullName}
             onChange={handleInputChange}
+            error={errors.fullName}
           />
           <Controls.Input
             name='email'
             label='Email'
             value={values.email}
             onChange={handleInputChange}
+            error={errors.email}
           />
-           <Controls.Input
+          <Controls.Input
             name='mobile'
             label='Moblie'
             value={values.mobile}
             onChange={handleInputChange}
+            error={errors.mobile}
           />
           <Controls.Input
             name='city'
@@ -67,14 +106,15 @@ export default function EmployeeForm() {
             value={values.departmentId}
             onChange={handleInputChange}
             options={employeeService.getDepartmentCollection()}
+            error={errors.departmentId}
           />
-          <Controls.DatePicker 
+          <Controls.DatePicker
             name='hireDate'
             label='Hire Date'
             value={values.hireDate}
             onChange={handleInputChange}
           />
-          <Controls.CheckBox 
+          <Controls.CheckBox
             name='isPermanent'
             label='Permanent Employee'
             onChange={handleInputChange}
@@ -88,6 +128,7 @@ export default function EmployeeForm() {
             <Controls.Button
               text='Reset'
               color='default'
+              onClick={resetForm}
             />
           </div>
         </Grid>

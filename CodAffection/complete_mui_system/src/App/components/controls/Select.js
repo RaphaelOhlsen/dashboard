@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { FormControl, InputLabel, MenuItem, Select as MuiSelect } from '@material-ui/core'
+import { FormControl, InputLabel, MenuItem, Select as MuiSelect, FormHelperText } from '@material-ui/core'
 
 export default function Select(props) {
-  const { name, label, value, onChange, options } = props;
+  const { name, label, value, error=null, onChange, options } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -15,7 +15,11 @@ export default function Select(props) {
   }
 
   return (
-    <FormControl variant='outlined' style={{maxWidth: 170}}>
+    <FormControl 
+      variant='outlined' 
+      style={{maxWidth: 170}}
+      {...(error && {error: true})}
+    >
       <InputLabel id='open-select-label'>{label}</InputLabel>
       <MuiSelect
         id='open-select-label'
@@ -32,6 +36,7 @@ export default function Select(props) {
             <MenuItem key={`option-${index}`} value={option.id}>{option.title}</MenuItem>
         ))}
       </MuiSelect>
+      {error && <FormHelperText>{error}</FormHelperText>}
     </FormControl>
   )
 }
