@@ -37,6 +37,7 @@ export default function EmployeeForm() {
 
     if ('departmentId' in fieldValues)
       temp.departmentId = fieldValues.departmentId.length !== 0 ? '' : 'This field is required';
+    
     setErrors({
       ...temp
     });

@@ -7,7 +7,7 @@ const inputProps = {
   }
 }
 
-export default function Input({ name, label, value, error=null, onChange }) {
+export default function Input({ name, label, value, error=null, onChange, ...other }) {
 
   return (
     <TextField
@@ -17,6 +17,7 @@ export default function Input({ name, label, value, error=null, onChange }) {
       value={value}
       onChange={onChange}
       inputProps={inputProps}
+      {...other}
       {...(error && {error: true,helperText:error})}
     />
   );
