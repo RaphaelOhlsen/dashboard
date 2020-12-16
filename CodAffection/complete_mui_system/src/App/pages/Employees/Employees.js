@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import PageHeader from "../../components/PageHeader";
-import EmployeeForm from "./EmployeeForm";
+import EmployeeForm3 from "./EmployeeForm3";
+
 import PeopleOullineTwoToOneIcon from '@material-ui/icons/PeopleOutlineTwoTone';
 import { Paper, TableCell, TableRow, TableBody, Toolbar, InputAdornment } from "@material-ui/core";
+
 import { makeStyles } from '@material-ui/core/styles';
+
 import useTable from '../../components/useTable';
 import * as employeeService from '../../services/employeeService';
+
 import Controls from '../../components/controls/Controls';
 import Search from '@material-ui/icons/Search';
 
@@ -60,8 +64,8 @@ export default function Employees() {
         icon={<PeopleOullineTwoToOneIcon fontSize='large' />}
       />
       <Paper className={classes.pageContent}>
-        {/* <EmployeeForm /> */}
-        <Toolbar>
+        <EmployeeForm3 />
+        {/* <Toolbar>
           <Controls.Input 
             label="Search Employees"
             className = {classes.searchInput}
@@ -92,7 +96,7 @@ export default function Employees() {
             }
           </TableBody>
         </TblContainer>
-        <TblPagination />
+        <TblPagination /> */}
       </Paper>
     </>
   )

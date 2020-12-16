@@ -18,7 +18,7 @@ export default function DatePicker(props) {
         disableToolbar
         variant='inline'
         inputVariant='outlined'
-        formate='MMM/dd/yyyy'
+        format='MMM/dd/yyyy'
         name={name}
         value={value}
         label={label}
